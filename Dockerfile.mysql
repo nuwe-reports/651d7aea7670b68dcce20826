@@ -1,0 +1,9 @@
+# MySQL image
+FROM mysql:latest
+
+# Environment variables for MySQL
+ENV MYSQL_ROOT_PASSWORD=qmTfrAfh104
+ENV MYSQL_DATABASE=hospital_db
+
+# Expose the port where MySQL will run
+EXPOSE 3306

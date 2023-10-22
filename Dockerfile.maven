@@ -1,0 +1,26 @@
+# Stage 1: Build the application with Maven
+FROM maven:3.6.3-jdk-8 as builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy application files (source code and pom.xml) into the container
+COPY . .
+
+# Run tests
+RUN mvn test
+
+# Compile and package the application
+RUN mvn package
+
+# Stage 2: Run the application
+FROM openjdk:8-jre-slim
+
+# Copy the compiled application from the 'builder' container to the current container
+COPY --from=builder /app/target/accenture-techhub-0.0.1-SNAPSHOT.war /app.jar
+
+# Define the command to run the application
+CMD ["java", "-jar", "/app.jar"]
+
+# Expose the port where the application will run
+EXPOSE 8080
